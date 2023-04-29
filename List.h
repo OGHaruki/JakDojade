@@ -2,8 +2,8 @@
 #pragma once
 #include <iostream>
 
-#define LAST_CELL 7
-#define TAB_SIZE 8
+#define LAST_CELL 0
+#define TAB_SIZE 1
 
 template <class T>
 class DoubleLinkedList {
@@ -13,8 +13,8 @@ private:
 public:
     typedef struct ListElement {
         T data;
-        T tab[8];
-        bool is_taken[8];   // tworze tablice ktora przechowywuje info o tym czy komorka jest juz zajeta
+        T tab[TAB_SIZE];
+        bool is_taken[TAB_SIZE];   // tworze tablice ktora przechowywuje info o tym czy komorka jest juz zajeta
         int num_elements;   // zmienna ktora przechowuje liczbe elementow w tab
         ListElement * next;
         ListElement * previous;
@@ -176,7 +176,7 @@ public:
             for(int i = 0; i < TAB_SIZE; i++) {
                 if(current_node->is_taken[i] == false) pom++;
             }
-            if(pom == 8) {
+            if(pom == TAB_SIZE) {
                 if(current_node == head && current_node == tail) {
                     head = nullptr;
                     tail = nullptr;
@@ -224,7 +224,7 @@ public:
             for(int i = 0; i < TAB_SIZE; i++) {
                 if(current_node->is_taken[i] == false) pom++;
             }
-            if(pom == 8) {
+            if(pom == TAB_SIZE) {
                 if(current_node == head && current_node == tail) {
                     head = nullptr;
                     tail = nullptr;
