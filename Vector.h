@@ -5,7 +5,7 @@ using namespace std;
 template <class T>
 class Vector {
     T* data;
-    int size;
+    int size{};
     int current{};
 
 public:
@@ -19,9 +19,23 @@ public:
     Vector(const Vector &other) {
         data = nullptr;
         size = 0;
-        const Vector* otherPointer = &other;
         for(int i = 0; i < other.size; i++) {
             PushBack(other[i]);
+        }
+    }
+
+    explicit Vector(int size) {
+        current = 0;
+        this->size = size;
+        data = new T[size];
+    }
+
+    Vector(int size, T value) {
+        current = 0;
+        this->size = size;
+        data = new T[size];
+        for(int i = 0; i < size; i++) {
+            data[i] = value;
         }
     }
 
@@ -71,6 +85,7 @@ public:
         delete[] data;
         data = nullptr;
         size = 0;
+        current = 0;
     }
 
     int GetIndex() {
@@ -102,5 +117,27 @@ public:
         size = pom.size;
         current = pom.current;
         return *this;
+    }
+
+    void Resize(int newSize) {
+        T* temp = new T[newSize];
+        int elements_to_copy;
+        if(data != nullptr) {
+            if(newSize < current) {
+                elements_to_copy = current;
+            }
+            else {
+                elements_to_copy = newSize;
+            }
+            for(int i = 0; i < elements_to_copy; i++) {
+                if(data[i] != nullptr) {
+                    temp[i] = data[i];
+                }
+            }
+        }
+        delete[] data;
+        data = temp;
+        size = newSize;
+        current = elements_to_copy;
     }
 };
